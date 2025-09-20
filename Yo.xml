@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+-->
+<TextureAtlas imagePath="Yo.png" width="2047" height="1982">
+  <SubTexture name="e0002.png" x="0" y="0"  width="539" height="446" frameX="-10" frameY="-57" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="e0000.png" x="539" y="0"  width="527" height="446" frameX="-17" frameY="-56" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="jeje0002.png" x="1066" y="0"  width="494" height="428" frameX="-38" frameY="-73" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="jeje0000.png" x="1560" y="0"  width="487" height="425" frameX="-48" frameY="-76" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="sad0000.png" x="1560" y="425"  width="486" height="420" frameX="-46" frameY="-83" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="sad0002.png" x="1066" y="428"  width="489" height="426" frameX="-43" frameY="-80" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="credits0000.png" x="1555" y="845"  width="480" height="309" frameX="-86" frameY="-113" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="normal0002.png" x="0" y="1154"  width="467" height="416" frameX="-62" frameY="-90" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="normal0000.png" x="0" y="1570"  width="460" height="412" frameX="-64" frameY="-90" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="epic0002.png" x="460" y="1570"  width="334" height="332" frameX="-123" frameY="-168" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="epic0000.png" x="467" y="1154"  width="325" height="326" frameX="-125" frameY="-167" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="e0001.png" x="539" y="0"  width="527" height="446" frameX="-17" frameY="-56" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="e0003.png" x="0" y="0"  width="539" height="446" frameX="-10" frameY="-57" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="e0004.png" x="0" y="0"  width="539" height="446" frameX="-10" frameY="-57" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="epic0001.png" x="467" y="1154"  width="325" height="326" frameX="-125" frameY="-167" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="epic0003.png" x="460" y="1570"  width="334" height="332" frameX="-123" frameY="-168" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="jeje0001.png" x="1560" y="0"  width="487" height="425" frameX="-48" frameY="-76" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="jeje0003.png" x="1066" y="0"  width="494" height="428" frameX="-38" frameY="-73" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="normal0001.png" x="0" y="1570"  width="460" height="412" frameX="-64" frameY="-90" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="normal0003.png" x="0" y="1154"  width="467" height="416" frameX="-62" frameY="-90" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="sad0001.png" x="1560" y="425"  width="486" height="420" frameX="-46" frameY="-83" frameWidth="640" frameHeight="640"/>
+  <SubTexture name="sad0003.png" x="1066" y="428"  width="489" height="426" frameX="-43" frameY="-80" frameWidth="640" frameHeight="640"/>
+</TextureAtlas>

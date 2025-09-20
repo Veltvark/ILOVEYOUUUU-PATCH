@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Intro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <style>
+    @font-face {
+      font-family: 'FNF';
+      src: url('FridayNightFunkin-Regular-1.ttf') format('truetype');
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      font-family: 'FNF', sans-serif;
+      color: white;
+      text-align: center;
+
+      overscroll-behavior: none;
+      touch-action: none;
+    }
+
+    #canvas {
+      display: block;
+      margin: 0;
+      background: black;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #btnNext {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-family: 'FNF', sans-serif;
+      cursor: pointer;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      z-index: 5;
+    }
+
+    #loveText {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 28px;
+      color: red;
+      font-family: 'FNF';
+      z-index: 5;
+    }
+
+    #fade {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      opacity: 1;
+      transition: opacity 2s;
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+  <div id="loveText">te amo</div>
+  <button id="btnNext">Siguiente</button>
+  <div id="fade"></div>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const fade = document.getElementById("fade");
+    const btnNext = document.getElementById("btnNext");
+
+    let texture;
+    let frames = {}; 
+    let currentAnim = "normal"; 
+    let frameIndex = 0;
+    let lastFrameTime = 0;
+    const fps = 12;
+    const frameDuration = 1000 / fps;
+
+    const scale = 0.7;
+
+let dialogues = [
+  {anim: "normal", text: "hola amor"},
+  {anim: "normal", text: "como puedes observar"},
+  {anim: "normal", text: "te he hecho una pagina web"},
+  {anim: "normal", text: "esto lo hice con la finalidad"},
+  {anim: "normal", text: "como tipo agradecerte"},
+  {anim: "normal", text: "por todo esta relacion <3"},
+  {anim: "normal", text: "bno vayamos al grano"},
+  {anim: "jeje", text: "alch como te amo"},
+  {anim: "jeje", text: "eres muy importante"},
+  {anim: "jeje", text: "enserio mucho...."},
+  {anim: "jeje", text: "sinceramente nunca"},
+  {anim: "normal", text: "habia hecho esto"},
+  {anim: "normal", text: "y en general todo"},
+  {anim: "jeje", text: "pero no importa"},
+  {anim: "jeje", text: "porque de veras te amo"},
+  {anim: "normal", text: "eres alguien maravillosa"},
+  {anim: "jeje", text: "y me haces sonreír siempre"},
+  {anim: "jeje", text: "contigo todo es mejor"},
+  {anim: "epic", text: "ya sin tanta mmda"},
+  {anim: "normal", text: "espero te guste esto"},
+  {anim: "jeje", text: "lo hice pensando en ti"},
+  {anim: "e", text: "y perdon si es algo simple"},
+  {anim: "e", text: "soy nuevo en hacer esto"},
+  {anim: "epic", text: "te amo con todo mi corazon <3"},
+];
+
+    let dialogueIndex = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    Promise.all([
+      fetch("Yo.xml").then(r => r.text()),
+      new Promise(res => {
+        texture = new Image();
+        texture.src = "Yo.png";
+        texture.onload = res;
+      })
+    ]).then(([xmlText]) => {
+      parseAtlas(xmlText);
+      startIntro();
+    });
+
+    function parseAtlas(xmlText) {
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(xmlText, "application/xml");
+      const subs = xml.getElementsByTagName("SubTexture");
+
+      for (let sub of subs) {
+        let name = sub.getAttribute("name");
+        if (name.includes("credits")) continue;
+        let animName = name.replace(/[0-9]+\.png$/, "");
+        if (!frames[animName]) frames[animName] = [];
+        frames[animName].push({
+          x: +sub.getAttribute("x"),
+          y: +sub.getAttribute("y"),
+          w: +sub.getAttribute("width"),
+          h: +sub.getAttribute("height")
+        });
+      }
+    }
+
+    function startIntro() {
+      setTimeout(() => {
+        fade.style.opacity = 0;
+      }, 1000);
+      requestAnimationFrame(loop);
+    }
+
+    function loop(timestamp) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (frames[currentAnim]) {
+        if (timestamp - lastFrameTime > frameDuration) {
+          frameIndex = (frameIndex + 1) % frames[currentAnim].length;
+          lastFrameTime = timestamp;
+        }
+        let f = frames[currentAnim][frameIndex];
+
+        let imgW = f.w * scale;
+        let imgH = f.h * scale;
+        let posX = (canvas.width - imgW) / 2;
+        let posY = canvas.height - imgH - 80;
+        ctx.drawImage(texture, f.x, f.y, f.w, f.h, posX, posY, imgW, imgH);
+      }
+
+      ctx.fillStyle = "white";
+      ctx.font = "28px FNF";
+      let text = dialogues[dialogueIndex].text;
+      let textWidth = ctx.measureText(text).width;
+      ctx.fillText(text, (canvas.width - textWidth) / 2, 100);
+
+      requestAnimationFrame(loop);
+    }
+
+    btnNext.addEventListener("click", () => {
+      dialogueIndex++;
+      if (dialogueIndex < dialogues.length) {
+        currentAnim = dialogues[dialogueIndex].anim;
+      } else {
+        fade.style.opacity = 1;
+        setTimeout(() => {
+          window.location.href = "Debug.html";
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

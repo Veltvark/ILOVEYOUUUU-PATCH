@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flor Amarilla</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onclick="PlayAudio()">
+    <audio id="musica1" autoplay  >
+        <source src="Flores Amarillas2.mp3" type="audio/mpeg" >
+        <source src="Flores Amarillas2.ogv" type="audio">
+
+    </audio>
+	
+   
+
+    <div class="sunflower">
+        <div class="flower_wrapper">
+            <div class="flower_stem"></div>
+            <div class="flower_center"></div>
+            <div class="flower_petal flower_petal-1"></div>
+            <div class="flower_petal flower_petal-2"></div>
+            <div class="flower_petal flower_petal-3"></div>
+            <div class="flower_petal flower_petal-4"></div>
+            <div class="flower_petal flower_petal-5"></div>
+            <div class="flower_petal flower_petal-6"></div>
+            <div class="flower_petal flower_petal-7"></div>
+            <div class="flower_petal flower_petal-8"></div>
+            <div class="flower_petal flower_petal-9"></div>
+            <div class="flower_petal flower_petal-10"></div>
+            <div class="flower_petal flower_petal-11"></div>
+            <div class="flower_petal flower_petal-12"></div>
+
+            <div class="flower_leaf flower_leaf-1"></div>
+            <div class="flower_leaf flower_leaf-2"></div>
+
+            <div class="flower_light flower_light-1"></div>
+            <div class="flower_light flower_light-2"></div>
+            <div class="flower_light flower_light-3"></div>
+            <div class="flower_light flower_light-4"></div>
+            <div class="flower_light flower_light-5"></div>
+            <div class="flower_light flower_light-6"></div>
+            <div class="flower_light flower_light-7"></div>
+            <div class="flower_light flower_light-8"></div>
+        </div>
+    </div>
+
+    <div class="light light-1"></div>
+    <div class="light light-2"></div>
+    <div class="light light-3"></div>
+    <div class="light light-4"></div>
+    <div class="light light-5"></div>
+    <div class="light light-6"></div>
+    <div class="light light-7"></div>
+    <div class="light light-8"></div>
+    <div class="light light-9"></div>
+    <div class="light light-10"></div>
+    <div class="light light-11"></div>
+    <div class="light light-12"></div>
+    
+    <p id="text">CON CARIÑO DE JUAN</p>
+</body>
+<script>
+    function PlayAudio(){
+       document.getElementById("musica1").play(); 
+    }
+  // -----------------------------
+  // POPUPS SPRITES (desde Yo.xml + Yo.png)
+  // -----------------------------
+  let texture2;
+  let frames2 = [];
+
+  // Cargar atlas y sprite
+  Promise.all([
+    fetch("Yo.xml").then(r => r.text()),
+    new Promise(res => {
+      texture2 = new Image();
+      texture2.src = "Yo.png";
+      texture2.onload = res;
+    })
+  ]).then(([xmlText]) => {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "application/xml");
+    const subs = xml.getElementsByTagName("SubTexture");
+
+    for (let sub of subs) {
+      let name = sub.getAttribute("name");
+      if (name.includes("credits")) continue; // saltamos credits
+      frames2.push({
+        x: +sub.getAttribute("x"),
+        y: +sub.getAttribute("y"),
+        w: +sub.getAttribute("width"),
+        h: +sub.getAttribute("height"),
+        name: name
+      });
+    }
+
+    // Comenzar loop infinito
+    setInterval(spawnPopup, 500); // cada 0.5s aparece uno
+  });
+
+  function spawnPopup() {
+    if (frames2.length === 0) return;
+
+    // Elegir frame aleatorio
+    let f = frames2[Math.floor(Math.random() * frames2.length)];
+
+    // Crear canvas temporal para el popup
+    let popup = document.createElement("canvas");
+    let ctx = popup.getContext("2d");
+    popup.width = f.w;
+    popup.height = f.h;
+    ctx.drawImage(texture2, f.x, f.y, f.w, f.h, 0, 0, f.w, f.h);
+
+    // Estilo del popup
+    popup.style.position = "fixed";
+    popup.style.left = Math.random() * (window.innerWidth - f.w) + "px";
+    popup.style.top = Math.random() * (window.innerHeight - f.h) + "px";
+    popup.style.transform = "scale(0.3)";
+    popup.style.opacity = "1";
+    popup.style.transition = "opacity 1s linear";
+
+    document.body.appendChild(popup);
+
+    // Desvanecer y eliminar después de 1s
+    setTimeout(() => { popup.style.opacity = "0"; }, 50);
+    setTimeout(() => { popup.remove(); }, 1050);
+  }
+</script>
+</html>

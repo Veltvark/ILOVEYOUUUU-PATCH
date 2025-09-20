@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IloveU:33</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    @font-face {
+      font-family: "Font";
+      src: url("FridayNightFunkin-Regular-1.ttf") format("truetype");
+    }
+
+    body {
+      background: linear-gradient(to bottom, #0011ff, #8000ff);
+      font-family: "Font", sans-serif;
+      color: white;
+      text-align: center;
+      margin: 0;
+      background-size: cover;
+      background-position: center;
+      overscroll-behavior: none;
+    }
+
+    .background-anim {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .square {
+      position: absolute;
+      width: 40px; height: 40px;
+      background: rgba(0,0,0,0.95);
+      animation: move 10s linear infinite, spin 4s linear infinite;
+    }
+
+    @keyframes move {
+      from { left: -50px; top: var(--randomY); }
+      to   { left: 110%; top: var(--randomY); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .gallery img {
+      width: 75%;
+      margin: 0 auto;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    h3 { margin-top: 40px; }
+
+    #fade {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      opacity: 1;
+      transition: opacity 2s;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* 🔹 Sprites popup */
+    .popup {
+      position: absolute;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+      width: 80px; /* tamaño fijo pequeño */
+      height: auto;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-anim">
+    <div class="square" style="--randomY: 20%; animation-delay: 0s;"></div>
+    <div class="square" style="--randomY: 40%; animation-delay: 2s;"></div>
+    <div class="square" style="--randomY: 60%; animation-delay: 4s;"></div>
+    <div class="square" style="--randomY: 80%; animation-delay: 6s;"></div>
+  </div>
+
+  <div class="gallery">
+    <h2>Te amo mucho</h2>
+    <h3>galeriazzzzz</h3>
+    <img src="1.png" alt="Dibujo 1">
+    <img src="2.png" alt="Dibujo2">
+    <img src="3.png" alt="Dibujo3">
+    <img src="4.png" alt="Dibujo4">
+    <img src="5.png" alt="Dibujo5">
+    <img src="6.png" alt="Dibujo6">
+    <img src="7.png" alt="Dibujo7">
+    <img src="8.png" alt="Dibujo9">
+    <img src="10.png" alt="Dibujo10">
+    <img src="11.png" alt="Dibujo11">
+    <img src="12.png" alt="Dibujo12">
+    <img src="13.png" alt="Dibujo13">
+    <img src="14.png" alt="Dibujo14">
+    <img src="15.png" alt="Dibujo15">
+    <img src="16.png" alt="Dibujo16">
+  </div>
+
+  <div id="fade"></div>
+
+  <script>
+    const fade = document.getElementById("fade");
+
+    // 🔹 Fade inicial
+    window.onload = () => {
+      setTimeout(() => {
+        fade.style.opacity = 0;
+      }, 1000);
+
+      const gallery = document.querySelector(".gallery");
+      const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          setTimeout(() => {
+            fade.style.opacity = 1;
+            setTimeout(() => {
+              window.location.href = "index2.html";
+            }, 2000);
+          }, 2000);
+        }
+      }, { threshold: 1.0 });
+
+      observer.observe(gallery.lastElementChild);
+    };
+  </script>
+</body>
+</html>
